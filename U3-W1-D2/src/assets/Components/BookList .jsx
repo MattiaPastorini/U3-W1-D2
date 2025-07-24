@@ -1,34 +1,31 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 import SingleBook from "./SingleBook ";
+import { useState } from "react";
 
 const BookList = ({ books }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [search, setSearch] = useState("");
 
   const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchQuery.toLowerCase())
+    book.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <Container className="my-4">
-      <Form.Group controlId="search">
-        <Form.Control
-          type="text"
-          placeholder="Cerca un libro..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="mb-3"
-        />
-      </Form.Group>
-
-      <Row>
+    <>
+      <Form.Control
+        type="text"
+        placeholder="Cerca un libro..."
+        className="mb-4"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <Row className="g-4">
         {filteredBooks.map((book) => (
-          <Col xs={12} sm={6} md={4} lg={3} key={book.asin} className="mb-4">
+          <Col xs={6} sm={4} md={3} lg={2} key={book.asin}>
             <SingleBook book={book} />
           </Col>
         ))}
       </Row>
-    </Container>
+    </>
   );
 };
 
